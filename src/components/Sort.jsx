@@ -1,13 +1,48 @@
 import React from "react";
 
-export const Sort = () => {
+export const Sort = ({ currentValue, setCurrentValue }) => {
   const [open, setOpen] = React.useState(false);
-  const [activeSort, setActiveSort] = React.useState(0);
-  const sorts = ["популярности", "цене", "алфавиту"];
-  const currentSort = sorts[activeSort];
+  const sorts = [
+    {
+      name: "популярности",
+      fullName: "популярности (сначала популярные)",
+      property: "rating",
+      order: "desc",
+    },
+    {
+      name: "популярности",
+      fullName: "популярности (сначала непопулярные)",
+      property: "rating",
+      order: "asc",
+    },
+    {
+      name: "цене",
+      fullName: "цене (сначала дорогие)",
+      property: "price",
+      order: "desc",
+    },
+    {
+      name: "цене",
+      fullName: "цене (сначала дешёвые)",
+      property: "price",
+      order: "asc",
+    },
+    {
+      name: "алфавиту",
+      fullName: "алфавиту (в алфавитном порядке)",
+      property: "title",
+      order: "asc",
+    },
+    {
+      name: "алфавиту",
+      fullName: "алфавиту (в обратном порядке)",
+      property: "title",
+      order: "desc",
+    },
+  ];
 
-  const choiceOfSort = (index) => {
-    setActiveSort(index);
+  const choiceOfSort = (sort) => {
+    setCurrentValue(sort);
     setOpen(false);
   };
 
@@ -27,7 +62,7 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{currentSort}</span>
+        <span onClick={() => setOpen(!open)}>{currentValue.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -35,10 +70,10 @@ export const Sort = () => {
             {sorts.map((sort, index) => (
               <li
                 key={index}
-                onClick={() => choiceOfSort(index)}
-                className={activeSort === index ? "active" : ""}
+                onClick={() => choiceOfSort(sort)}
+                className={currentValue === sort ? "active" : ""}
               >
-                {sort}
+                {sort.fullName}
               </li>
             ))}
           </ul>
