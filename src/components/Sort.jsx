@@ -1,48 +1,53 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveSort } from "../redux/slices/filterSlice";
 
-export const Sort = ({ currentValue, setCurrentValue }) => {
+const sorts = [
+  {
+    name: "популярности",
+    fullName: "популярности (сначала популярные)",
+    property: "rating",
+    order: "desc",
+  },
+  {
+    name: "популярности",
+    fullName: "популярности (сначала непопулярные)",
+    property: "rating",
+    order: "asc",
+  },
+  {
+    name: "цене",
+    fullName: "цене (сначала дорогие)",
+    property: "price",
+    order: "desc",
+  },
+  {
+    name: "цене",
+    fullName: "цене (сначала дешёвые)",
+    property: "price",
+    order: "asc",
+  },
+  {
+    name: "алфавиту",
+    fullName: "алфавиту (в алфавитном порядке)",
+    property: "title",
+    order: "asc",
+  },
+  {
+    name: "алфавиту",
+    fullName: "алфавиту (в обратном порядке)",
+    property: "title",
+    order: "desc",
+  },
+];
+
+export const Sort = () => {
   const [open, setOpen] = React.useState(false);
-  const sorts = [
-    {
-      name: "популярности",
-      fullName: "популярности (сначала популярные)",
-      property: "rating",
-      order: "desc",
-    },
-    {
-      name: "популярности",
-      fullName: "популярности (сначала непопулярные)",
-      property: "rating",
-      order: "asc",
-    },
-    {
-      name: "цене",
-      fullName: "цене (сначала дорогие)",
-      property: "price",
-      order: "desc",
-    },
-    {
-      name: "цене",
-      fullName: "цене (сначала дешёвые)",
-      property: "price",
-      order: "asc",
-    },
-    {
-      name: "алфавиту",
-      fullName: "алфавиту (в алфавитном порядке)",
-      property: "title",
-      order: "asc",
-    },
-    {
-      name: "алфавиту",
-      fullName: "алфавиту (в обратном порядке)",
-      property: "title",
-      order: "desc",
-    },
-  ];
+  const currentValue = useSelector((state) => state.filter.activeSort);
+  const dispatch = useDispatch();
 
   const choiceOfSort = (sort) => {
-    setCurrentValue(sort);
+    dispatch(setActiveSort(sort));
     setOpen(false);
   };
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { PizzaBlock } from "../components/PizzaBlock";
@@ -10,13 +11,8 @@ export const Home = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [activeCategory, setActiveCategory] = React.useState(0);
-  const [activeSort, setActiveSort] = React.useState({
-    name: "популярности",
-    fullName: "популярности (сначала популярные)",
-    property: "rating",
-    order: "desc",
-  });
+
+  const { activeCategory, activeSort } = useSelector((state) => state.filter);
   const { searchText } = React.useContext(SearchContext);
 
   React.useEffect(() => {
@@ -47,14 +43,8 @@ export const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          currentValue={activeCategory}
-          setCurrentValue={(i) => setActiveCategory(i)}
-        />
-        <Sort
-          currentValue={activeSort}
-          setCurrentValue={(sort) => setActiveSort(sort)}
-        />
+        <Categories />
+        <Sort />
       </div>
 
       <h2 className="content__title">Все пиццы</h2>
