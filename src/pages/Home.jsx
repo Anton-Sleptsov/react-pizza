@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useSelector } from "react-redux";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
@@ -24,14 +25,22 @@ export const Home = () => {
     const order = activeSort.order;
     const search = searchText ? `&search=${searchText}` : "";
 
-    fetch(
-      `https://6712c3d46c5f5ced662497c0.mockapi.io/items?${page}&sortBy=${sort}&order=${order}${category}${search}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
+    axios
+      .get(
+        `https://6712c3d46c5f5ced662497c0.mockapi.io/items?${page}&sortBy=${sort}&order=${order}${category}${search}`
+      )
+      .then((res) => {
+        setItems(res.data);
         setIsLoading(false);
+        console.log(res);
+      })
+      .catch((error) => {
+        if(error.status === 404){
+          setItems([]);
+          setIsLoading(false);
+        }
       });
+
     window.scrollTo(0, 0);
   }, [activeCategory, activeSort, searchText, currentPage]);
 
