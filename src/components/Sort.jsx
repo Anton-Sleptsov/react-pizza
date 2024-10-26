@@ -44,6 +44,7 @@ export const sorts = [
 export const Sort = () => {
   const [open, setOpen] = React.useState(false);
   const currentValue = useSelector((state) => state.filter.activeSort);
+  const sortRef = React.useRef();
   const dispatch = useDispatch();
 
   const choiceOfSort = (sort) => {
@@ -51,8 +52,22 @@ export const Sort = () => {
     setOpen(false);
   };
 
+  React.useEffect(() => {
+    const clickHendler = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+
+    document.body.addEventListener("click", clickHendler);
+
+    return () => {
+      document.body.removeEventListener("click", clickHendler);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
