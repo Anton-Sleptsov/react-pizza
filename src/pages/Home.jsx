@@ -6,7 +6,6 @@ import { Categories } from "../components/Categories";
 import { Sort, sorts } from "../components/Sort";
 import { PizzaBlock } from "../components/PizzaBlock";
 import { Sceleton } from "../components/PizzaBlock/Skeleton";
-import { SearchContext } from "../layouts/Layout";
 import { Pagination } from "../components/Pagination";
 import {
   selectFilters,
@@ -21,11 +20,10 @@ export const Home = () => {
   const isMounted = React.useRef(false);
   const navigate = useNavigate();
 
-  const { activeCategory, activeSort, currentPage } =
+  const { activeCategory, activeSort, currentPage, searchText } =
     useSelector(selectFilters);
   const { items, status } = useSelector(selectPizzaData);
   const dispathc = useDispatch();
-  const { searchText } = React.useContext(SearchContext);
 
   const getPizzas = () => {
     const page = `page=${currentPage}&limit=4`;
