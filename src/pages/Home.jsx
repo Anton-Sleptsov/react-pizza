@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +8,12 @@ import { PizzaBlock } from "../components/PizzaBlock";
 import { Sceleton } from "../components/PizzaBlock/Skeleton";
 import { SearchContext } from "../layouts/Layout";
 import { Pagination } from "../components/Pagination";
-import { setCurrentPage, setFilters } from "../redux/slices/filterSlice";
-import { fetchPizzas } from "../redux/slices/pizzaSlice";
+import {
+  selectFilters,
+  setCurrentPage,
+  setFilters,
+} from "../redux/slices/filterSlice";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
 import { ErrorFetch } from "../components/ErrorFetch";
 
 export const Home = () => {
@@ -18,10 +21,9 @@ export const Home = () => {
   const isMounted = React.useRef(false);
   const navigate = useNavigate();
 
-  const { activeCategory, activeSort, currentPage } = useSelector(
-    (state) => state.filter
-  );
-  const { items, status } = useSelector((state) => state.pizza);
+  const { activeCategory, activeSort, currentPage } =
+    useSelector(selectFilters);
+  const { items, status } = useSelector(selectPizzaData);
   const dispathc = useDispatch();
   const { searchText } = React.useContext(SearchContext);
 

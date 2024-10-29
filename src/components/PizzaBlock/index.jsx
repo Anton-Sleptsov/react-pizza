@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewItem } from "../../redux/slices/cartSlice";
+import { addNewItem, selectCart } from "../../redux/slices/cartSlice";
 
 export const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
   const [pizzaCount, setPizzaCount] = React.useState(0);
@@ -9,15 +9,13 @@ export const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
   const allTypes = ["тонкое", "традиционное"];
 
   const dispatch = useDispatch();
-  const { items } = useSelector((store) => store.cart);
+  const { items } = useSelector(selectCart);
 
   React.useEffect(() => {
     const currentItems = items.filter((item) => item.id === id);
-    
-    
+
     if (currentItems.length > 0) {
-      const count = currentItems.reduce((sum, item) => sum + item.count, 0)
-      //console.log("Одна пицца: ", currentItem);
+      const count = currentItems.reduce((sum, item) => sum + item.count, 0);
       setPizzaCount(count);
     }
   }, [items, id]);

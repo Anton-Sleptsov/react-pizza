@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveCategory } from "../redux/slices/filterSlice";
+import { selectActiveCategory, setActiveCategory } from "../redux/slices/filterSlice";
 
 const categories = [
   "Все",
@@ -12,7 +12,7 @@ const categories = [
 ];
 
 export const Categories = () => {
-  const currentValue = useSelector((state) => state.filter.activeCategory);
+  const currentValue = useSelector(selectActiveCategory);
   const dispatch = useDispatch();
 
   return (
