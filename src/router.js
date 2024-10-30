@@ -4,6 +4,7 @@ import { Layout } from "./layouts/Layout";
 import { Cart } from "./pages/Cart";
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
+import { Pizza } from "./pages/Pizza";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/pizza/:id",
+        element: <Pizza />,
       },
       {
         path: "/cart",
