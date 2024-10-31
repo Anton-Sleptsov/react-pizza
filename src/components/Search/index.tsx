@@ -6,20 +6,20 @@ import iconSearch from "../../assets/img/search-icon.svg";
 import iconClear from "../../assets/img/clear-icon.svg";
 import { setSearchText } from "../../redux/slices/filterSlice";
 
-export const Search = () => {
+export const Search: React.FC = () => {
   const dispath = useDispatch();
   const [value, setValue] = React.useState("");
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setSearchTextInRedux = React.useCallback(
-    debounce((text) => {
+    debounce((text: string) => {
       dispath(setSearchText(text));
     }, 1000),
     []
   );
 
-  const onChangeValue = (event) => {
+  const onChangeValue = (event: any) => {
     setValue(event.target.value);
     setSearchTextInRedux(event.target.value);
   };
@@ -27,7 +27,7 @@ export const Search = () => {
   const onClickClear = () => {
     setValue("");
     dispath(setSearchText(""));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (

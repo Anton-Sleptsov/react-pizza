@@ -1,6 +1,7 @@
+import React from "react";
 import styles from "./ErrorFetch.module.scss";
 
-export const ErrorFetch = () => {
+export const ErrorFetch: React.FC = () => {
   return (
     <div className={styles.root}>
       <h2>

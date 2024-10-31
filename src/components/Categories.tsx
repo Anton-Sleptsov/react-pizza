@@ -11,7 +11,7 @@ const categories = [
   "Закрытые",
 ];
 
-export const Categories = () => {
+export const Categories: React.FC = () => {
   const currentValue = useSelector(selectActiveCategory);
   const dispatch = useDispatch();
 

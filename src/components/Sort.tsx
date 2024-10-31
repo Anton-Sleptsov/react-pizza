@@ -2,7 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectActiveSort, setActiveSort } from "../redux/slices/filterSlice";
 
-export const sorts = [
+type SortItem = {
+  name: string;
+  fullName: string;
+  property: string;
+  order: string;
+};
+
+export const sorts: SortItem[] = [
   {
     name: "популярности",
     fullName: "популярности (сначала популярные)",
@@ -41,19 +48,19 @@ export const sorts = [
   },
 ];
 
-export const Sort = () => {
+export const Sort: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const currentValue = useSelector(selectActiveSort);
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const choiceOfSort = (sort) => {
+  const choiceOfSort = (sort: SortItem) => {
     dispatch(setActiveSort(sort));
     setOpen(false);
   };
 
   React.useEffect(() => {
-    const clickHendler = (event) => {
+    const clickHendler = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }

@@ -15,7 +15,7 @@ import {
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
 import { ErrorFetch } from "../components/ErrorFetch";
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ export const Home = () => {
     const search = searchText ? `&search=${searchText}` : "";
 
     dispathc(
+      //@ts-ignore
       fetchPizzas({
         page,
         category,
@@ -88,7 +89,7 @@ export const Home = () => {
     isSearch.current = false;
   }, [activeCategory, activeSort, searchText, currentPage]);
 
-  const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
+  const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />);
   const skeletons = [...new Array(4)].map((_, index) => (
     <Sceleton key={index} />
   ));
@@ -110,7 +111,7 @@ export const Home = () => {
         </div>
       )}
 
-      <Pagination onChangePage={(number) => dispathc(setCurrentPage(number))} />
+      <Pagination onChangePage={(number: number) => dispathc(setCurrentPage(number))} />
     </div>
   );
 };

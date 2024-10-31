@@ -1,10 +1,11 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { CartItem } from "../components/CartItem";
 import { clearCart, selectCart } from "../redux/slices/cartSlice";
 import { EmptyCart } from "../components/EmptyCart";
 
-export const Cart = () => {
+export const Cart: React.FC = () => {
   const { items, totalPrice, totalCount } = useSelector(selectCart);
   const dispath = useDispatch();
 
@@ -90,7 +91,7 @@ export const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item, index) => (
+          {items.map((item: any, index: number) => (
             <CartItem key={index} {...item} />
           ))}
         </div>
