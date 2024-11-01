@@ -60,8 +60,8 @@ export const Sort: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const clickHendler = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const clickHendler = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };

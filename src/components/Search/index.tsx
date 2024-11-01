@@ -19,7 +19,7 @@ export const Search: React.FC = () => {
     []
   );
 
-  const onChangeValue = (event: any) => {
+  const onChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     setSearchTextInRedux(event.target.value);
   };
