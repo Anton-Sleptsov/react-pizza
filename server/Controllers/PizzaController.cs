@@ -53,46 +53,50 @@ namespace server.Controllers
         }
 
         [HttpGet("GetAllSortAndOrder")]
-        public IActionResult GetAllSortAndOrder(string sortBy, string order)
+        public IActionResult GetAllSortAndOrder(int page, int limit, string sortBy, string order)
         {
             var pizzasData = _pizzaRepository.GetAllSortAndOrder(sortBy, order);
+            var paginateData = _pizzaRepository.Paginate(page, limit, pizzasData);
 
-            var pizzas = pizzasData
+            var pizzas = paginateData
                 .Select(_pizzaMapper.MapViewModel);
 
             return Ok(pizzas);
         }
 
         [HttpGet("GetAllByCategory")]
-        public IActionResult GetAllByCategory(string sortBy, string order, int category)
+        public IActionResult GetAllByCategory(int page, int limit, string sortBy, string order, int category)
         {
             var pizzasData = _pizzaRepository.GetByCategory(sortBy, order, category);
+            var paginateData = _pizzaRepository.Paginate(page, limit, pizzasData);
 
-            var pizzas = pizzasData
+            var pizzas = paginateData
                 .Select(_pizzaMapper.MapViewModel);
 
             return Ok(pizzas);
         }
 
         [HttpGet("GetAllBySearchText")]
-        public IActionResult GetAllBySearchText(string sortBy, string order, string searchText)
+        public IActionResult GetAllBySearchText(int page, int limit, string sortBy, string order, string searchText)
         {
             var pizzasData = _pizzaRepository.GetBySearchText(sortBy, order, searchText);
+            var paginateData = _pizzaRepository.Paginate(page, limit, pizzasData);
 
-            var pizzas = pizzasData
+            var pizzas = paginateData
                 .Select(_pizzaMapper.MapViewModel);
 
             return Ok(pizzas);
         }
 
         [HttpGet("GetAllByCategoryAndSearchText")]
-        public IActionResult GetAllByCategoryAndSearchText(string sortBy, string order, int category, string searchText)
+        public IActionResult GetAllByCategoryAndSearchText(int page, int limit, string sortBy, string order, int category, string searchText)
         {
             var pizzasDataBySearch = _pizzaRepository.GetBySearchText(sortBy, order, searchText);
             var pizzasDataByCategory = _pizzaRepository.GetByCategory(sortBy, order, category);
-            var pizzasData = pizzasDataBySearch.Intersect(pizzasDataByCategory);
+            var pizzasData = pizzasDataBySearch.Intersect(pizzasDataByCategory).ToList();
+            var paginateData = _pizzaRepository.Paginate(page, limit, pizzasData);
 
-            var pizzas = pizzasData
+            var pizzas = paginateData
                 .Select(_pizzaMapper.MapViewModel);
 
             return Ok(pizzas);
