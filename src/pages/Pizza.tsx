@@ -15,7 +15,8 @@ export const Pizza: React.FC = () => {
     async function fetchPizza() {
       try {
         const { data } = await axios.get(
-          "https://6712c3d46c5f5ced662497c0.mockapi.io/items/" + id
+          "http://localhost:5027/pizza/GetPizza?id=" + id
+          //"https://6712c3d46c5f5ced662497c0.mockapi.io/items/" + id
         );
         setPizza(data);
       } catch (error) {

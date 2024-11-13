@@ -27,10 +27,20 @@ export const Home: React.FC = () => {
 
   const getPizzas = () => {
     const page = `page=${currentPage}&limit=4`;
-    const category = activeCategory === 0 ? "" : `&category=${activeCategory}`;
     const sort = activeSort.property;
     const order = activeSort.order;
+    const category = activeCategory === 0 ? "" : `&category=${activeCategory}`;
     const search = searchText ? `&search=${searchText}` : "";
+    let methodName;
+    if (category.length > 0 && search.length > 0) {
+      methodName = "GetAllByCategoryAndSearchText";
+    } else if (category.length > 0) {
+      methodName = "GetAllByCategory";
+    } else if (search.length > 0) {
+      methodName = "GetAllBySearchText";
+    } else {
+      methodName = "GetAllSortAndOrder";
+    }
 
     dispathc(
       //@ts-ignore
@@ -40,6 +50,7 @@ export const Home: React.FC = () => {
         sort,
         order,
         search,
+        methodName
       })
     );
   };
@@ -89,7 +100,9 @@ export const Home: React.FC = () => {
     isSearch.current = false;
   }, [activeCategory, activeSort, searchText, currentPage]);
 
-  const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />);
+  const pizzas = items.map((pizza: any) => (
+    <PizzaBlock key={pizza.id} {...pizza} />
+  ));
   const skeletons = [...new Array(4)].map((_, index) => (
     <Sceleton key={index} />
   ));
@@ -111,7 +124,9 @@ export const Home: React.FC = () => {
         </div>
       )}
 
-      <Pagination onChangePage={(number: number) => dispathc(setCurrentPage(number))} />
+      <Pagination
+        onChangePage={(number: number) => dispathc(setCurrentPage(number))}
+      />
     </div>
   );
 };

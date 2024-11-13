@@ -1,5 +1,4 @@
-﻿using Data.Models;
-using Data.Repositories;
+﻿using Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using server.Mappers;
 using server.Models;
@@ -28,7 +27,7 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("GetPizza")]
         public IActionResult Get([FromQuery] int id)
         {
             var pizzaData = _pizzaRepository.GetById(id);

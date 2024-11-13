@@ -1,9 +1,18 @@
 using Data;
 using Data.Repositories;
-using Microsoft.EntityFrameworkCore;
 using server.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(x =>
+{
+    x.AddDefaultPolicy(p =>
+    {
+        p.AllowAnyMethod();
+        p.AllowAnyOrigin();
+        p.AllowAnyHeader();
+    });
+});
 
 // Add services to the container.
 
@@ -18,6 +27,8 @@ builder.Services.AddScoped<PizzaRepository>();
 builder.Services.AddScoped<PizzaMapper>();
 
 var app = builder.Build();
+
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
